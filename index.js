@@ -34,10 +34,16 @@ app.get("/sign-in", (req, res) => {
             docs.forEach((doc) => {
               usersData.push(doc.data());
             });
+
+            for (var i = 0; i < usersData.length; i++) {
+              if (usersData[i].email === email) {
+                a = usersData[i].name;
+              }
+            }
           })
           .then(() => {
             console.log(usersData);
-            res.render("ecommerce", { userData: usersData });
+            res.render("ecommerce", { userData: usersData, u1: a });
           });
       } else {
         res.send("Login failed");
