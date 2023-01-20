@@ -12,14 +12,14 @@ initializeApp({
 const db = getFirestore();
 app.set("view engine", "ejs");
 app.get("/", (req, res) => {
-  res.send("Good morning");
+  res.render("login");
 });
 app.get("/signin", (req, res) => {
   res.render("signin");
 });
 
-app.get("/signinsubmit", (req, res) => {
-  const email = req.query.email;
+app.get("/sign-in", (req, res) => {
+  const email = req.query.mail;
   const password = req.query.password;
   db.collection("users")
     .where("email", "==", email)
@@ -37,7 +37,7 @@ app.get("/signinsubmit", (req, res) => {
           })
           .then(() => {
             console.log(usersData);
-            res.render("home", { userData: usersData });
+            res.render("ecommerce", { userData: usersData });
           });
       } else {
         res.send("Login failed");
@@ -45,14 +45,14 @@ app.get("/signinsubmit", (req, res) => {
     });
 });
 
-app.get("/signupsubmit", (req, res) => {
-  const full_name = req.query.full_name;
-  const last_name = req.query.last_name;
-  const email = req.query.email;
+app.get("/signup", (req, res) => {
+  const full_name = req.query.name;
+  //const last_name = req.query.last_name;
+  const email = req.query.mail;
   const password = req.query.password;
   db.collection("users")
     .add({
-      name: full_name + last_name,
+      name: full_name,
       email: email,
       password: password,
     })
